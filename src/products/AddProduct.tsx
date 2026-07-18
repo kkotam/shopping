@@ -1,52 +1,57 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//상품추가 폼데이터 인터페이스 정의
-interface FormData{
+// 상품 추가 폼 데이터 인터페이스 정의
+interface FormData {
     name: string,
     price: number,
     description: string,
-    image: File | null
+    image: File | null  //파일을 선택하지 않으면 null
 }
 
-const AddProduct =() => {
+const AddProduct = () => {
     const [formData, setFormData] = useState<FormData>({
         name: "",
         price: 0,
-        description: "",
-        image: null       
+        description: '',
+        image: null
     });
 
     const navigate = useNavigate();
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>{
-        const {name, value} = e.target;
-        const files = (e.target as HTMLInputElement).files;
 
-        if(name === 'image' && files){
-            setFormData({...formData, image: files[0]});
+    // 필드 입력값 변경
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement |
+        HTMLTextAreaElement>) => {
+        const { name, value } = e.target; //파일이 없는 경우
+        const files = (e.target as HTMLInputElement).files;  //파일이 있는 경우
 
-        }else{
-            setFormData({...formData, [name]:value});
+        if (name === "image" && files) { //파일이 있는 경우
+            setFormData({ ...formData, image: files[0] });
+        } else { //파일이 없는 경우
+            setFormData({ ...formData, [name]: value });
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) =>{
+    // 폼 제출 핸들러 함수
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const {name, price, description} = formData;
+        //폼 데이터 구조분해 할당
+        const { name, price, description } = formData;
 
-        if(!name || !price || !description){
-            alert("모든 항목을 입력하세요");
+        //유효성 검사
+        if (!name || !price || !description) {
+            alert("모든 항목을 입력해주세요");
             return;
         }
-        console.log("formData: ", formData);
-        alert("상품이 등록되었습니다");
-        navigate('/products');   
+
+        console.log("formData:", formData);
+        alert("상품이 등록되었습니다.");
+        navigate('/products'); //상품 등록후 상품목록 페이지로 이동
     }
 
-
-    return(
+    return (
         <div className="add-product">
-            <h3>상품등록</h3>
+            <h2>상품 등록</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">상품명</label>
@@ -54,7 +59,7 @@ const AddProduct =() => {
                         type="text"
                         id="name"
                         name="name"
-                        placeholder="설명을 입력하세요"
+                        placeholder="상품명을 입력하세요"
                         value={formData.name}
                         onChange={handleChange}
                     />
@@ -65,7 +70,7 @@ const AddProduct =() => {
                         type="number"
                         id="price"
                         name="price"
-                        placeholder="설명을 입력하세요"
+                        placeholder="가격을 입력하세요"
                         value={formData.price}
                         onChange={handleChange}
                     />
@@ -86,7 +91,6 @@ const AddProduct =() => {
                         type="file"
                         id="image"
                         name="image"
-                        placeholder="설명을 입력하세요"
                         onChange={handleChange}
                     />
                 </div>
@@ -95,4 +99,5 @@ const AddProduct =() => {
         </div>
     )
 }
+
 export default AddProduct;

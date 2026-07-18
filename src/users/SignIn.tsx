@@ -1,49 +1,64 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import users from "../data/users.json"
+import { useNavigate, Link } from "react-router-dom";
 
-interface FormData{
+// 폼 데이터 객체
+interface SignInForm{
     username: string,
-    password: string
+    password: string,
 }
 
-const SignIn =() =>{
-    const [formData, setFormData] = useState<FormData>({
-            username: "",
-            password: ""
-        });
+// 로그인 Props 객체 정의
+interface SignInProps{
+    onLogin: (username: string) => void;
+}
 
-    const navigate = useNavigate();
+
+const SignIn = ({onLogin}: SignInProps) => {
+    // 폼 데이터 상태 관리
+    const [formData, setFormData] = useState<SignInForm>({
+        username: '',
+        password: ''
+    })
+
+    //로그인 결과 상태 관리
     const [loginResult, setLoginResult] = useState<string>('');
+    const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    // 입력값 변경 핸들러 함수
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
-        setFormData({...formData, [name]:value});
 
+        setFormData({...formData, [name]: value});
     }
 
-    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    //폼 제출 핸들러 함수
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const {username, password} = formData;
 
+        //유효성 검사
         if(!username || !password){
-            alert("모든 항목을 입력하세요")
-        }    
-        
-        console.log("formData: ", formData);
+            alert('모든 항목을 입력하세요.');
+            return;
+        }
 
-        const matched = users.find(user =>user.username === username && user.password == password);
+        console.log("formData:", formData);
+
+        //로그인 일치 여부
+        const matched = users.find(user =>
+            user.username === username && user.password == password);
 
         if(matched){
             setLoginResult("success");
-            alert("로그인 되었습니다")
-            navigate('/');
+            onLogin(username);  //부모 컴포넌트에 알림
+            alert("로그인 되었습니다.");
+            navigate('/');  //로그인 성공후 메인 페이지로 이동
         }else{
             setLoginResult("fail");
             return;
         }
     }
-
 
     return(
         <div className="signin">
@@ -51,8 +66,8 @@ const SignIn =() =>{
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">아이디</label>
-                    <input
-                        type="text"
+                    <input 
+                        type="text" 
                         id="username"
                         name="username"
                         placeholder="아이디를 입력하세요"
@@ -61,22 +76,25 @@ const SignIn =() =>{
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">패스워드</label>
-                    <input
-                        type="text"
+                    <label htmlFor="password">비밀번호</label>
+                    <input 
+                        type="password" 
                         id="password"
                         name="password"
-                        placeholder="아이디를 입력하세요"
+                        placeholder="비밀번호를 입력하세요"
                         value={formData.password}
                         onChange={handleChange}
                     />
                 </div>
                 <button type="submit">로그인</button>
-                {loginResult === "fail" &&
-                <p className="error">로그인 실패! 다시 시도해주세요</p>}
-
             </form>
+            <p className="signup-link">
+                아직 계정이 없으신가요? <Link to="/signup"> 회원가입</Link>
+            </p>
+            {loginResult === "fail" && 
+                    <p className="error">로그인 실패! 다시 시도해 주세요</p>}
         </div>
     )
 }
+
 export default SignIn;

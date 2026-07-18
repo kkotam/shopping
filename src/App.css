@@ -1,40 +1,63 @@
+/* Header style */
 .header{
-    height: 50px;
-    margin-bottom: 20px;
-    background-color: #333;
+  height: 60px;
+  margin-bottom: 20px;
+  background-color: #333;
 }
 .header a{
-    color: orange;
-    margin: 0 16px;
-    text-decoration: none;
-    line-height: 50px; /*메뉴 가운데*/
+  margin: 0 16px;
+  color: orange;
+  line-height: 60px; /* 메뉴 가운데 정렬 */
+  text-decoration: none;
 }
+.header .header-user{
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #fbff1c;
+}
+.header .logout-btn{
+  margin-left: 10px;
+  padding: 6px 12px;
+  border: 1px solid #ff9f1c;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #ff9f1c;
+}
+.header .logout-btn:hover{
+  background-color: #ff9f1c;
+  color: #333;
+}
+
+
+/* 상품목록 style */
 .product-list{
-    width: 80%;
-    margin: 20px auto;
+  width: 80%;
+  margin: 20px auto;
 }
 .card-container{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 .card{
-    width: 250px;
-    border: 1px solid #ccc;
-    padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 .card-image{
-    width: 100%;
-    height: 200px;
+  width: 100%; 
+  height: 200px;
 }
 .card-title{
-    font-size: 10px;
-    color: #333;
+  font-size: 18px;
+  color: #333;
 }
 .card-text{
-    font-size: 16px;
-    color: #555;
+  font-size: 16px;
+  color: #555;
 }
+
 /* 상품 정보 스타일 */
 .product-info{
   width: 80%;
@@ -46,11 +69,10 @@
   font-size: 28px;
   color: #222;
   border-bottom: 2px solid #e91263;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
 .product-details{
   display: flex;
-  align-items: flex-start;
   justify-content: center;
   gap: 40px;
 }
@@ -64,7 +86,7 @@
 .product-content{
   max-width: 420px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 세로(수직) 배치 */
   gap: 16px;
 }
 .product-content .price{
@@ -86,7 +108,7 @@
   border-radius: 8px;
   font-size: 15px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s; /* 애니메이션- 속성을 0.2초 간격 */
 }
 .product-buttons .btn-list:hover{
   background-color: #555;
@@ -105,7 +127,6 @@
 .product-buttons .btn-cart:hover{
   background-color: #c2185b;
 }
-
 /* 상품 등록 스타일 */
 .add-product{
   width: 80%;
@@ -124,7 +145,7 @@
   flex-direction: column;
   gap: 16px;
 }
-.add-product form > div{
+.add-product form > div{ /* > - 하위 선택자 */
   display: flex;
   align-items: flex-start;
 }
@@ -165,7 +186,6 @@
 .add-product button:hover{
   background-color: #c2185b;
 } 
-
 /* 로그인 스타일 */
 .signin{
   width: 80%;
@@ -220,6 +240,7 @@
 }
 .signup-link{
   margin-top: 15px;
+  font-size: 15px;
 }
 
 /* 회원가입 스타일 */
@@ -271,18 +292,4 @@
   background-color: #0204a0;
 } 
 
-/* 관리자 DashBoard 스타일 */
-.order-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-.order-table th,
-.order-table td{
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-}
-.order-table th{
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
+
